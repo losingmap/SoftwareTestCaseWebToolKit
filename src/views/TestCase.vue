@@ -98,8 +98,9 @@
 						parse[i].id = this.data.length;
 						this.data.push(parse[i]);
 					}
+					this.$Message.success("解析JSON成功");
 				} catch (e) {
-					this.$Message.error("JSON数据有误")
+					this.$Message.error("JSON数据有误");
 				}
 			},
 			onDragDrop: function (start, end) {
@@ -202,6 +203,7 @@
 										this.newData[x.key] = event.target.innerHTML;
 									} else {
 										this.data[index][x.key] = event.target.innerHTML;
+										Utils.setItem("data", this.data());
 									}
 								},
 								'mousedown': e => {
