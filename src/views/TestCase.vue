@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<Button type="primary" @click="about">关于</Button>
-		<Table max-height="1000" border :columns="columns" :data="data">
+		<Table max-height="1000" border :columns="columns" draggable :data="data" @on-drag-drop="onDragDrop">
 			<template slot-scope="{ row }" slot="id">
 				<strong>{{ row.id }}</strong>
 			</template>
@@ -15,8 +15,7 @@
 		<Button type="primary" @click="ex">导出excel</Button>
 		<Button type="primary" @click="copyData">复制JSON数据</Button>
 		<Input v-model="pasteData" size="large" placeholder="导入JSON数据" style="width: 120px" @input="paste"/>
-		<input type="text" :value="JSON.stringify(data)" ref="dataVal" style="opacity: 0;cursor: auto" readonly>
-	
+		<input type="text" :value="JSON.stringify(data)" ref="dataVal" style="opacity: 0;cursor: default" readonly>
 	</div>
 </template>
 <script>
@@ -42,7 +41,7 @@
 				data: [
 					{}
 				],
-				pasteData: ""
+				pasteData: "",
 			}
 		},
 		computed: {
@@ -103,6 +102,15 @@
 					this.$Message.error("JSON数据有误")
 				}
 			},
+			onDragDrop: function (start,end) {
+				if (start === 0 || end === 0 ) {
+					this.$Message.error("不要乱放");
+					return;
+				}
+				console.log(start, end);
+				let splice = this.data.splice(start, 1)[0];
+				this.data.splice(end, 0, splice);
+			},
 			ex: function () {
 				let wopts = {
 					bookType: 'xlsx',
@@ -157,7 +165,7 @@
 			about: function () {
 				this.$Modal.info({
 					title: "关于",
-					content: "项目建设阶段"
+					content: `项目建设阶段<br>中键设置单一模板<br>按下ctrl可以拖拽移动`
 				})
 			},
 		},
@@ -212,6 +220,19 @@
 			this.data = Utils.getItem("data") || [{}];
 			this.data.length <= 0 && (this.data = [{}]);
 			this.newData = this.data[0];
+			document.querySelectorAll(".ivu-table-row").forEach(x => x.removeAttribute("draggable"));
+			document.onkeydown = e => {
+				if (e.keyCode === 17) {
+					if (e.keyCode === 17) {
+						document.querySelectorAll(".ivu-table-row").forEach(x => x.setAttribute("draggable",true));
+					}
+				}
+			}
+			document.onkeyup = e => {
+				if (e.keyCode === 17) {
+					document.querySelectorAll(".ivu-table-row").forEach(x => x.removeAttribute("draggable"));
+				}
+			}
 		}
 	}
 </script>
