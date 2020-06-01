@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router/router'
 import store from './store/store'
 import iView from "view-design";
-import axios from 'axios'
+import axios from 'axios';
 
 axios.defaults.baseURL = "/api";
 Vue.use(iView);

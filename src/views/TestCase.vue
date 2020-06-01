@@ -1,5 +1,6 @@
 <template>
 	<div class="container">
+		<Button type="primary" @click="about">关于</Button>
 		<Table max-height="1000" border :columns="columns" :data="data">
 			<template slot-scope="{ row }" slot="id">
 				<strong>{{ row.id }}</strong>
@@ -12,8 +13,10 @@
 			</template>
 		</Table>
 		<Button type="primary" @click="ex">导出excel</Button>
-		<Button type="primary" @click="ex">复制JSON数据</Button>
-		<Button type="primary" @click="ex">导入JSON数据</Button>
+		<Button type="primary" @click="copyData">复制JSON数据</Button>
+		<Input v-model="pasteData" size="large" placeholder="导入JSON数据" style="width: 120px" @input="paste"/>
+		<input type="text" :value="JSON.stringify(data)" ref="dataVal" style="opacity: 0;cursor: auto" readonly>
+	
 	</div>
 </template>
 <script>
@@ -38,7 +41,8 @@
 				],
 				data: [
 					{}
-				]
+				],
+				pasteData: ""
 			}
 		},
 		computed: {
@@ -73,6 +77,31 @@
 				Object.keys(this.data[0]).forEach(key => {
 					this.data[0][key] = "";
 				})
+			},
+			copyData: function () {
+				let input = this.$refs['dataVal'];
+				input.select();
+				document.execCommand("copy");
+				this.$Message.success("复制成功");
+			},
+			paste: function (data) {
+				this.pasteData = new String("");
+				try {
+					let parse = JSON.parse(data);
+					// parse.forEach(x => {
+					// 	this.data.push(x);
+					// })
+					for (let i = 0; i < parse.length;i++) {
+						if (i === 0) {
+							this.data[0] = parse[i];
+							continue;
+						}
+						parse[i].id = this.data.length;
+						this.data.push(parse[i]);
+					}
+				}catch (e) {
+					this.$Message.error("JSON数据有误")
+				}
 			},
 			ex: function () {
 				let wopts = {
@@ -124,7 +153,13 @@
 					for (var i = 0; i != s.length; ++i) buf[i] = s.charCodeAt(i) & 0xFF;
 					return buf;
 				}
-			}
+			},
+			about: function () {
+				this.$Modal.info({
+					title: "关于",
+					content: "项目建设阶段"
+				})
+			},
 		},
 		watch: {
 			cols(newValue, oldValue) {
@@ -136,6 +171,7 @@
 					x.render = (h, {row, index}) => {
 						if (x.key === 'id') {
 							if (index === 0) return "";
+							this.data[index].id = index;
 							return h("div", this.prefix + row.id);
 						}
 						
