@@ -175,6 +175,7 @@
 			this.getCols();
 			this.data = Utils.getItem("data") || [{}];
 			this.data.length <= 0 && (this.data = [{}]);
+			this.newData = this.data[0];
 		}
 	}
 </script>
