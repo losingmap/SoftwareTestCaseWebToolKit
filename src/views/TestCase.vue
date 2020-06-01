@@ -7,7 +7,7 @@
 			<template slot-scope="{ row, index }" slot="action">
 				<Button v-if="index===0" type="primary" size="small" @click="add()">添加</Button>
 				<Button v-if="index!==0" type="error" size="small" @click="remove(index)">删除</Button>
-				<Button v-if="index!==0" type="warning" size="small" @click="toOrigin(index)">源</Button>
+				<Button type="warning" size="small" @click="toOrigin(index)">模板</Button>
 			</template>
 		</Table>
 		<Button type="primary" @click="ex">导出excel</Button>
