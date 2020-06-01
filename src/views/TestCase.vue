@@ -163,7 +163,7 @@
 		},
 		mounted: function () {
 			this.getCols();
-			this.data = Utils.getItem("data");
+			this.data = Utils.getItem("data") || [{}];
 		}
 	}
 </script>
