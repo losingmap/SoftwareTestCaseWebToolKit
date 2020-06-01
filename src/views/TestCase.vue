@@ -58,11 +58,12 @@
 			add: function () {
 				this.newData.id = this.data.length;
 				this.data.push(this.newData);
-				this.newData = JSON.parse(JSON.stringify(this.newData));
+				this.newData = JSON.parse(JSON.stringify(this.data[0]));
 			},
 			toOrigin: function (index) {
 				if (index === 0) {
 					this.data.splice(0, 1, JSON.parse(JSON.stringify(this.newData)));
+					this.newData = JSON.parse(JSON.stringify(this.newData));
 					return;
 				}
 				this.newData = JSON.parse(JSON.stringify(this.data[index]));
