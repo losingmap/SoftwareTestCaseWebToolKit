@@ -69,7 +69,9 @@
 				this.data.splice(0, 1, JSON.parse(JSON.stringify(this.data[index])));
 			},
 			deletePlate: function () {
-				this.data.splice(0, 1, {});
+				this.data[0].forEach(key => {
+					this.data[0][key] = "";
+				})
 			},
 			ex: function () {
 				let wopts = {
