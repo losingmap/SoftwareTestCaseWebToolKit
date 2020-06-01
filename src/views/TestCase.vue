@@ -8,6 +8,7 @@
 				<Button v-if="index===0" type="primary" size="small" @click="add()">添加</Button>
 				<Button v-if="index!==0" type="error" size="small" @click="remove(index)">删除</Button>
 				<Button type="warning" size="small" @click="toOrigin(index)">模板</Button>
+				<Button v-if="index===0" type="error" size="small" @click="deletePlate(index)">清空</Button>
 			</template>
 		</Table>
 		<Button type="primary" @click="ex">导出excel</Button>
@@ -66,6 +67,9 @@
 				}
 				this.newData = JSON.parse(JSON.stringify(this.data[index]));
 				this.data.splice(0, 1, JSON.parse(JSON.stringify(this.data[index])));
+			},
+			deletePlate: function () {
+				this.data.splice(0, 1, {});
 			},
 			ex: function () {
 				let wopts = {
