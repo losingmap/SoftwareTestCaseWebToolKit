@@ -60,8 +60,12 @@
 				this.newData = JSON.parse(JSON.stringify(this.newData));
 			},
 			toOrigin: function (index) {
+				if (index === 0) {
+					this.data.splice(0, 1, JSON.parse(JSON.stringify(this.newData)));
+					return;
+				}
 				this.newData = JSON.parse(JSON.stringify(this.data[index]));
-				this.data.splice(0,1,JSON.parse(JSON.stringify(this.data[index])));
+				this.data.splice(0, 1, JSON.parse(JSON.stringify(this.data[index])));
 			},
 			ex: function () {
 				let wopts = {
@@ -81,9 +85,8 @@
 					let params = {};
 					for (const col of this.cols) {
 						if (this.data[i][col.key].replace) {
-							params[col.title] = this.data[i][col.key].
-							replace(/<br>/g, "\n").replace(/<div>/g, "\n").replace(/<\/div>/g, "\n");
-						}else{
+							params[col.title] = this.data[i][col.key].replace(/<br>/g, "\n").replace(/<div>/g, "\n").replace(/<\/div>/g, "\n");
+						} else {
 							params[col.title] = this.data[i][col.key];
 						}
 					}
