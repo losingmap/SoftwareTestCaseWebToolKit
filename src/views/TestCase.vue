@@ -207,6 +207,7 @@
 								'mousedown': e => {
 									if (e.button === 1) {
 										this.data[0][x.key] = this.data[index][x.key];
+										this.newData[x.key] = this.data[index][x.key];
 									}
 								}
 							}
