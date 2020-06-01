@@ -90,7 +90,7 @@
 					// parse.forEach(x => {
 					// 	this.data.push(x);
 					// })
-					for (let i = 0; i < parse.length;i++) {
+					for (let i = 0; i < parse.length; i++) {
 						if (i === 0) {
 							this.data[0] = parse[i];
 							continue;
@@ -98,12 +98,12 @@
 						parse[i].id = this.data.length;
 						this.data.push(parse[i]);
 					}
-				}catch (e) {
+				} catch (e) {
 					this.$Message.error("JSON数据有误")
 				}
 			},
-			onDragDrop: function (start,end) {
-				if (start === 0 || end === 0 ) {
+			onDragDrop: function (start, end) {
+				if (start === 0 || end === 0) {
 					this.$Message.error("不要乱放");
 					return;
 				}
@@ -128,8 +128,9 @@
 				for (let i = 1; i < this.data.length; i++) {
 					let params = {};
 					for (const col of this.cols) {
-						if (this.data[i][col.key].replace) {
-							params[col.title] = this.data[i][col.key].replace(/<br>/g, "\n").replace(/<div>/g, "\n").replace(/<\/div>/g, "\n");
+						if (this.data[i][col.key] && this.data[i][col.key].replace) {
+							let breakLine = String.fromCharCode(10);
+							params[col.title] = this.data[i][col.key].replace(/<br>/g, breakLine).replace(/<div>/g, breakLine).replace(/<\/div>/g, breakLine);
 						} else {
 							params[col.title] = this.data[i][col.key];
 						}
@@ -137,9 +138,8 @@
 					table[i] = params
 				}
 				workBook.Sheets['Sheet1'] = XLSX.utils.json_to_sheet(table);
-				console.log(table);
 				
-				FileSaver.saveAs(new Blob([this.changeData(XLSX.write(workBook, wopts))], {type: 'application/octet-stream'}), "sheetjs.xlsx")
+				FileSaver.saveAs(new Blob([this.changeData(XLSX.write(workBook, wopts))], {type: 'application/octet-stream'}), "测试用例.xlsx")
 			},
 			changeData(s) {
 				
@@ -171,6 +171,11 @@
 		},
 		watch: {
 			cols(newValue, oldValue) {
+				newValue.forEach(x => {
+					if (this.data[0][x.key] === undefined) {
+						this.data[0][x.key] = {};
+					}
+				})
 				this.columns.slice(this.columns.length - 1, 1);
 				let val = JSON.parse(JSON.stringify(newValue));
 				val.reverse();
@@ -224,7 +229,7 @@
 			document.onkeydown = e => {
 				if (e.keyCode === 17) {
 					if (e.keyCode === 17) {
-						document.querySelectorAll(".ivu-table-row").forEach(x => x.setAttribute("draggable",true));
+						document.querySelectorAll(".ivu-table-row").forEach(x => x.setAttribute("draggable", true));
 					}
 				}
 			}
