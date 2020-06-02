@@ -189,12 +189,14 @@
 							return h("div", this.prefix + row.id);
 						}
 						
+						
+						let innerHTML = index === 0 ? this.newData[x.key] : row[x.key];
 						return h("div", {
 							attrs: {
 								contenteditable: true
 							},
 							domProps: {
-								innerHTML: row[x.key]
+								innerHTML
 							},
 							on: {
 								'blur': event => {
@@ -208,7 +210,7 @@
 								},
 								'mousedown': e => {
 									if (e.button === 1) {
-										this.data[0][x.key] = this.data[index][x.key];
+										// this.data[0][x.key] = this.data[index][x.key];
 										this.newData[x.key] = this.data[index][x.key];
 									}
 								}
