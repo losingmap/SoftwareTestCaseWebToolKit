@@ -131,7 +131,7 @@
 					for (const col of this.cols) {
 						if (this.data[i][col.key] && this.data[i][col.key].replace) {
 							let breakLine = String.fromCharCode(10);
-							params[col.title] = this.data[i][col.key].replace(/<br>/g, breakLine).replace(/<div>/g, breakLine).replace(/<\/div>/g, breakLine);
+							params[col.title] = this.data[i][col.key].replace(/<br>/g, "").replace(/<div>/g, "").replace(/<\/div>/g, breakLine);
 						} else {
 							params[col.title] = this.data[i][col.key];
 						}
