@@ -203,7 +203,7 @@
 										this.newData[x.key] = event.target.innerHTML;
 									} else {
 										this.data[index][x.key] = event.target.innerHTML;
-										Utils.setItem("data", this.data());
+										Utils.setItem("data", this.data);
 									}
 								},
 								'mousedown': e => {
