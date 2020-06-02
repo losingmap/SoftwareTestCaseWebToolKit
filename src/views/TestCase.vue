@@ -60,7 +60,7 @@
 			},
 			add: function () {
 				this.newData.id = this.data.length;
-				this.data.push(this.newData);
+				this.data.push(JSON.parse(JSON.stringify(this.newData)));
 				this.newData = JSON.parse(JSON.stringify(this.data[0]));
 			},
 			toOrigin: function (index) {
