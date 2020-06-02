@@ -76,7 +76,7 @@
 				Object.keys(this.data[0]).forEach(key => {
 					this.data[0][key] = "";
 				})
-				this.newData = this.data[0];
+				this.newData = JSON.parse(JSON.stringify(this.data[0]));
 				this.saveData();
 			},
 			copyData: function () {
