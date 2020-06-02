@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<Button type="primary" @click="about">关于</Button>
-		<Table max-height="1000" border :columns="columns" draggable="false" :data="data" @on-drag-drop="onDragDrop">
+		<Table :max-height="innerHeight" border :columns="columns" draggable="false" :data="data" @on-drag-drop="onDragDrop">
 			<template slot-scope="{ row }" slot="id">
 				<strong>{{ row.id }}</strong>
 			</template>
@@ -76,6 +76,8 @@
 				Object.keys(this.data[0]).forEach(key => {
 					this.data[0][key] = "";
 				})
+				this.newData = this.data[0];
+				this.saveData();
 			},
 			copyData: function () {
 				let input = this.$refs['dataVal'];
@@ -169,6 +171,9 @@
 					content: `项目建设阶段<br>中键设置单一模板<br>按下ctrl可以拖拽移动`
 				})
 			},
+			saveData: function () {
+				Utils.setItem("data", this.data);
+			},
 		},
 		watch: {
 			cols(newValue, oldValue) {
@@ -205,7 +210,7 @@
 										this.newData[x.key] = event.target.innerHTML;
 									} else {
 										this.data[index][x.key] = event.target.innerHTML;
-										Utils.setItem("data", this.data);
+										this.saveData();
 									}
 								},
 								'mousedown': e => {
