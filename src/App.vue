@@ -14,9 +14,11 @@
 		created() {
 			this.init({
 				callback: user => {
-					this.$router.push("/");
+					// this.$router.push("/");
 					if (!user || !user.username || user === "anonymousUser" || this.$route.path != "/") {
-						this.$router.push("/");
+						console.log(this.$route.path);
+						if (this.$route.path !== "/")
+							this.$router.push("/");
 					} else if (user !== "anonymousUser") {
 						this.$router.push("/testcase");
 					}
