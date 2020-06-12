@@ -16,6 +16,11 @@
 		<Button type="primary" @click="copyData">复制JSON数据</Button>
 		<Input v-model="pasteData" size="large" placeholder="导入JSON数据" style="width: 120px" @input="paste"/>
 		<input type="text" :value="JSON.stringify(data)" ref="dataVal" style="opacity: 0;cursor: default" readonly>
+		<br>
+		<Button type="success">云存储</Button>
+		<Button type="success">复制云共享码</Button>
+		<Input v-model="pasteData" size="large" placeholder="粘贴云共享码" style="width: 120px" @input="paste"/>
+	
 	</div>
 </template>
 <script>
