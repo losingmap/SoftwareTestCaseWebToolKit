@@ -16,7 +16,6 @@
 				callback: user => {
 					// this.$router.push("/");
 					if (!user || !user.username || user === "anonymousUser" || this.$route.path != "/") {
-						console.log(this.$route.path);
 						if (this.$route.path !== "/")
 							this.$router.push("/");
 					} else if (user !== "anonymousUser") {

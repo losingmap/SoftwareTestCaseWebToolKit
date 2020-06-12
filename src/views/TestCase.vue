@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<Button type="primary" @click="about">关于</Button>
-		<Table :max-height="innerHeight" border :columns="columns" draggable="false" :data="data" @on-drag-drop="onDragDrop">
+		<Table border :columns="columns" :draggable="false" :data="data" @on-drag-drop="onDragDrop">
 			<template slot-scope="{ row }" slot="id">
 				<strong>{{ row.id }}</strong>
 			</template>

@@ -81,6 +81,7 @@
 		methods: {
 			...mapActions("user",["login"]),
 			tryLogin(formLogin) {
+				console.log(formLogin)
 				this.$refs["formLogin"].validate(valid => {
 					let {username, password} = formLogin;
 					this.login({
