@@ -38,6 +38,7 @@
 						<Button type="primary" v-on:keyup.enter="tryLogin(formLogin)" :class="{'grey':posted.login}"
 						        @click="tryLogin(formLogin)">登录
 						</Button>
+						<Button @click="customMode">访客登录</Button>
 					</FormItem>
 				</Form>
 			</Col>
@@ -54,7 +55,7 @@
 			return {
 				checked: false,
 				posted: {
-					login : false
+					login: false
 				},
 				formLogin: {
 					username: "",
@@ -79,24 +80,30 @@
 			};
 		},
 		methods: {
-			...mapActions("user",["login"]),
-			tryLogin(formLogin) {
+			...mapActions("user", ["login"]),
+			tryLogin(formLogin, custom = false) {
 				console.log(formLogin)
 				this.$refs["formLogin"].validate(valid => {
 					let {username, password} = formLogin;
 					this.login({
-						username, password,formLogin,
+						username, password, formLogin,
 						callback: () => {
 							router.push("/testcase");
 						},
-						info: (type,msg) => this.$Message[type](msg),
-						valid,
-						posted:this.posted
+						info: (type, msg) => this.$Message[type](msg),
+						valid: valid || custom,
+						posted: this.posted
 					})
 				});
 			},
 			clearCookie() {
 			
+			},
+			customMode() {
+				this.tryLogin({
+					username: "test",
+					password: "123"
+				}, true);
 			}
 		}
 	};
