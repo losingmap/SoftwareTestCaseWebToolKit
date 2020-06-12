@@ -15,7 +15,7 @@
 			this.init({
 				callback: user => {
 					this.$router.push("/");
-					if ((!user.username || user === "anonymousUser") && this.$route.path != "/") {
+					if ((!user || !user.username || user === "anonymousUser") && this.$route.path != "/") {
 						this.$router.push("/");
 					} else if (user !== "anonymousUser") {
 						this.$router.push("/testcase");
